@@ -41,7 +41,8 @@ body{margin:0;background:var(--wood);color:var(--ink);font:500 19px/1.55 var(--d
 [hidden]{display:none!important}
 img{display:block;max-width:100%}
 :focus-visible{outline:2px solid var(--foil);outline-offset:3px}
-.page{max-width:520px;margin:0 auto;background:var(--grain),var(--paper);overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.5)}
+.page{max-width:520px;margin:0 auto;background:var(--grain),var(--paper);overflow-x:clip;box-shadow:0 0 80px rgba(0,0,0,.5)}
+.content{min-width:0;background:var(--grain),var(--paper)}
 
 /* ---------- the door and what is behind it ---------- */
 .scene{position:relative;aspect-ratio:9/16;max-width:100%;overflow:hidden;perspective:1700px;container-type:inline-size;background:var(--wood)}
@@ -186,6 +187,21 @@ footer.sec{gap:18px;padding-block:54px}
 .crest text{font:400 40px var(--script);fill:var(--foil-hi)}
 .crest circle{fill:none;stroke:var(--foil-hi)}
 
+/* phone: the whole door fits the first screen */
+@media (orientation:portrait){.scene{max-height:100svh}}
+/* computer: the door stays in view on the left, the invitation scrolls on the right */
+@media (min-width:900px) and (min-height:520px){
+  :root{--scene-h:min(100vh,1040px)}
+  body{background:var(--grain),radial-gradient(90% 120% at 50% 0%,var(--wood-lit),var(--wood) 70%)}
+  .page{max-width:none;display:grid;grid-template-columns:calc(var(--scene-h)*.5625) minmax(0,620px);justify-content:center;align-items:start;background:none;box-shadow:none}
+  .scene{position:sticky;top:0;width:calc(var(--scene-h)*.5625);height:var(--scene-h);aspect-ratio:auto;max-height:none}
+  .scene-fade{display:none}
+  .content{box-shadow:0 0 80px rgba(0,0,0,.45)}
+  .sec{padding-block:76px}
+  #datum{padding-top:76px}
+  #odbrojuvanje{padding-top:44px}
+}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0s!important;animation:none!important}
@@ -218,6 +234,7 @@ footer.sec{gap:18px;padding-block:54px}
   </button>
 </header>
 
+<div class="content">
 <main>
 <section class="sec" id="datum">
   <p class="label">Зачувајте го датумот</p>
@@ -270,6 +287,7 @@ footer.sec{gap:18px;padding-block:54px}
   <p class="label" data-f="footerDate">21.05.2027</p>
   <button class="tbtn" type="button" id="replay">Затвори ја портата и погледни повторно</button>
 </footer>
+</div>
 </div>
 
 <script>
@@ -376,7 +394,7 @@ footer.sec{gap:18px;padding-block:54px}
   if (location.hash === '#otvoreno') openGate();
   $('replay').addEventListener('click', function () {
     scene.classList.remove('open');
-    scene.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     gate.focus({ preventScroll: true });
   });
 })();
