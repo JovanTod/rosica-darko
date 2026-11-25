@@ -191,6 +191,7 @@ h3{font:500 24px/1.2 var(--display);margin:0}
 .program li:last-child{padding-bottom:0}
 .program li:not(:last-child)::before{content:"";position:absolute;left:74px;top:24px;bottom:-4px;width:1px;background:var(--line)}
 .program time{font:500 15px/1.9 var(--label);letter-spacing:.05em;font-variant-numeric:tabular-nums;text-align:right}
+.program time span{display:block;margin-top:-7px;font-size:12.5px;letter-spacing:.02em;white-space:nowrap;color:var(--ink-soft)}
 .program .dot{justify-self:center;width:9px;height:9px;margin-top:10px;transform:rotate(45deg);border:1px solid var(--foil);background:var(--paper)}
 .program li:first-child .dot{background:var(--foil)}
 .program p{margin:2px 0 0;font-size:17px;line-height:1.4;color:var(--ink-soft)}
@@ -206,8 +207,6 @@ h3{font:500 24px/1.2 var(--display);margin:0}
 .info div{display:grid;grid-template-columns:92px 1fr;gap:16px;align-items:baseline}
 .info dt{font:500 11.5px/1.5 var(--label);letter-spacing:.2em;text-transform:uppercase;color:var(--foil)}
 .info dd{margin:0;font-size:18px;line-height:1.45;min-width:0}
-.contact{display:block}
-.contact a{color:inherit;text-decoration:underline;text-decoration-color:var(--foil);text-underline-offset:3px;font-variant-numeric:lining-nums}
 
 footer.sec{gap:18px;padding-block:54px}
 .closing{font:400 46px/1.15 var(--script);color:var(--foil-hi)}
@@ -289,7 +288,7 @@ footer.sec{gap:18px;padding-block:54px}
 <section class="sec" id="datum">
   <p class="label">Зачувајте го датумот</p>
   <div class="datebar"><span data-f="weekday">сабота</span><strong class="foil-text" data-f="day">24</strong><span data-f="monthYear">јули 2027</span></div>
-  <p class="where"><span data-f="venueName">Име на ресторанот</span><br><span class="soft" data-f="venuePlace">Град</span></p>
+  <p class="where"><span data-f="venueName">Ресторан Парк Гиновци</span><br><span class="soft" data-f="venuePlace">Крива Паланка</span></p>
   <div class="rule" aria-hidden="true"><i></i></div>
   <p class="label">Неколку зборови од нас</p>
   <p data-f="letter1">Со голема радост ве покануваме да бидете со нас на денот кога пред Бога и пред најблиските ќе си кажеме „да“.</p>
@@ -320,8 +319,7 @@ footer.sec{gap:18px;padding-block:54px}
 <section class="sec deep" id="mesta">
   <p class="label">Каде</p>
   <div class="places">
-    <div class="place"><p class="label">Венчавање · <span data-f="churchTime">16:00</span></p><h3 data-f="churchName">Нашата убава црква</h3><p class="soft" data-f="churchPlace">Место на црквата</p><a class="tbtn" id="map-church" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 21s-6.500-6.200-6.500-11.200a6.500 6.500 0 0 1 13 0C18.500 14.800 12 21 12 21z"/><circle cx="12" cy="9.800" r="2.300"/></svg>Отвори во мапи</a></div>
-    <div class="place"><p class="label">Свечена вечера · <span data-f="venueTime">18:00</span></p><h3 data-f="venueName">Име на ресторанот</h3><p class="soft" data-f="venuePlace">Град</p><a class="tbtn" id="map-venue" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 21s-6.500-6.200-6.500-11.200a6.500 6.500 0 0 1 13 0C18.500 14.800 12 21 12 21z"/><circle cx="12" cy="9.800" r="2.300"/></svg>Отвори во мапи</a></div>
+    <div class="place"><p class="label">Свечена вечера · <span data-f="venueTime">18:00</span></p><h3 data-f="venueName">Ресторан Парк Гиновци</h3><p class="soft" data-f="venuePlace">Крива Паланка</p><a class="tbtn" id="map-venue" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 21s-6.500-6.200-6.500-11.200a6.500 6.500 0 0 1 13 0C18.500 14.800 12 21 12 21z"/><circle cx="12" cy="9.800" r="2.300"/></svg>Отвори во мапи</a></div>
   </div>
 </section>
 
@@ -331,7 +329,6 @@ footer.sec{gap:18px;padding-block:54px}
   <dl class="info">
     <div><dt>Мени</dt><dd data-f="menuNote"></dd></div>
     <div><dt>Потврда</dt><dd>Ве молиме јавете ни дали доаѓате најдоцна до <span data-f="rsvpBy"></span>.</dd></div>
-    <div><dt>Контакт</dt><dd id="contacts"></dd></div>
   </dl>
 </section>
 </main>
@@ -355,26 +352,20 @@ footer.sec{gap:18px;padding-block:54px}
   var CONFIG = {
     bride: 'Росица',
     groom: 'Дарко',
-    start: '2027-07-24T16:00:00+02:00',   // почеток на венчавањето (часот е пример)
-    end:   '2027-07-25T01:00:00+02:00',   // завршеток (пример)
-    church: { name: 'Нашата убава црква', place: 'Место на црквата', time: '16:00', map: '' },
-    venue:  { name: 'Име на ресторанот', place: 'Град', time: '18:00', map: '' },
+    start: '2027-07-24T18:00:00+02:00',   // прием на гости
+    end:   '2027-07-25T00:30:00+02:00',   // завршеток
+    venue: { name: 'Ресторан Парк Гиновци', place: 'Крива Паланка', time: '18:00', map: '' },
     letter: [
       'Со голема радост ве покануваме да бидете со нас на денот кога пред Бога и пред најблиските ќе си кажеме „да“.',
       'Дојдете да се веселиме, да наздравиме и овој ден да го запомниме заедно.'
     ],
     program: [
-      { time: '16:00', title: 'Венчавање', note: 'Во црквата, пред Бога и пред вас.' },
-      { time: '18:00', title: 'Прием на гости', note: 'Добредојде и наздравување во ресторанот.' },
-      { time: '20:00', title: 'Прв танц', note: 'Потоа подиумот е ваш.' },
-      { time: '01:00', title: 'Завршеток', note: 'Со последната песна.' }
+      { time: '18:00', until: '18:30', title: 'Прием на гости', note: 'Добредојде и наздравување во ресторанот.' },
+      { time: '19:30', title: 'Прв танц', note: 'Потоа подиумот е ваш.' },
+      { time: '00:30', title: 'Завршеток', note: 'Со последната песна.' }
     ],
     menuNote: 'Вечерата е со стандардно мени. Ако постите или имате посебна исхрана, јавете ни однапред.',
-    rsvpBy: '1 јули 2027',
-    contacts: [
-      { name: 'Росица', phone: '07X XXX XXX' },
-      { name: 'Дарко', phone: '07X XXX XXX' }
-    ]
+    rsvpBy: '1 јули 2027'
   };
   /* ===================================== */
 
@@ -404,7 +395,6 @@ footer.sec{gap:18px;padding-block:54px}
   set('monthYear', month + ' ' + ymd[0]); set('monthYearCap', cap(month) + ' ' + ymd[0]);
   set('dayMonth', ymd[2] + ' ' + month);
   set('footerDate', dateDots); set('dateSpaced', pad(ymd[2]) + ' · ' + pad(ymd[1]) + ' · ' + ymd[0]);
-  set('churchName', CONFIG.church.name); set('churchPlace', CONFIG.church.place); set('churchTime', CONFIG.church.time);
   set('venueName', CONFIG.venue.name); set('venuePlace', CONFIG.venue.place); set('venueTime', CONFIG.venue.time);
   set('letter1', CONFIG.letter[0]); set('letter2', CONFIG.letter[1] || '');
   set('menuNote', CONFIG.menuNote); set('rsvpBy', CONFIG.rsvpBy);
@@ -425,33 +415,24 @@ footer.sec{gap:18px;padding-block:54px}
     var li = el('li'), body = el('div');
     body.appendChild(el('h3', '', step.title));
     if (step.note) body.appendChild(el('p', '', step.note));
-    li.appendChild(el('time', '', step.time)); li.appendChild(el('span', 'dot')); li.appendChild(body);
+    var when = el('time', '', step.time);
+    if (step.until) when.appendChild(el('span', '', '– ' + step.until));
+    li.appendChild(when); li.appendChild(el('span', 'dot')); li.appendChild(body);
     list.appendChild(li);
-  });
-
-  /* ---- contacts: a real number becomes a tap-to-call link ---- */
-  var contacts = $('contacts');
-  CONFIG.contacts.forEach(function (c) {
-    var row = el('span', 'contact', c.name + ' · ');
-    var dial = c.phone.replace(/[^\d+]/g, '');
-    if (/^\+?\d{8,}$/.test(dial)) { var a = el('a', '', c.phone); a.href = 'tel:' + dial; row.appendChild(a); }
-    else row.appendChild(document.createTextNode(c.phone));
-    contacts.appendChild(row);
   });
 
   /* ---- maps ---- */
   var mapUrl = function (place) {
     return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(place.map || (place.name + ' ' + place.place));
   };
-  $('map-church').href = mapUrl(CONFIG.church);
   $('map-venue').href = mapUrl(CONFIG.venue);
 
   /* ---- calendar: Google link, and an .ics file for Apple / Outlook ---- */
   var startAt = new Date(CONFIG.start), endAt = new Date(CONFIG.end);
   var stamp = function (t) { return t.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); };
   var evTitle = 'Свадба – ' + couple;
-  var evWhere = CONFIG.church.name + ', ' + CONFIG.church.place;
-  var evNote = 'Венчавање во ' + CONFIG.church.time + ' – ' + CONFIG.church.name + '. Свечена вечера во ' + CONFIG.venue.time + ' – ' + CONFIG.venue.name + ', ' + CONFIG.venue.place + '.';
+  var evWhere = CONFIG.venue.name + ', ' + CONFIG.venue.place;
+  var evNote = 'Прием на гости од ' + CONFIG.venue.time + ' – ' + evWhere + '.';
   $('cal-google').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
     '&text=' + encodeURIComponent(evTitle) + '&dates=' + stamp(startAt) + '/' + stamp(endAt) +
     '&location=' + encodeURIComponent(evWhere) + '&details=' + encodeURIComponent(evNote);
