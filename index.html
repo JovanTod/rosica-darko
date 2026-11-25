@@ -328,7 +328,6 @@ footer.sec{gap:18px;padding-block:54px}
   <h2>Добро е <em>да знаете</em></h2>
   <dl class="info">
     <div><dt>Мени</dt><dd data-f="menuNote"></dd></div>
-    <div><dt>Потврда</dt><dd>Ве молиме јавете ни дали доаѓате најдоцна до <span data-f="rsvpBy"></span>.</dd></div>
   </dl>
 </section>
 </main>
@@ -364,8 +363,7 @@ footer.sec{gap:18px;padding-block:54px}
       { time: '19:30', title: 'Прв танц', note: 'Потоа подиумот е ваш.' },
       { time: '00:30', title: 'Завршеток', note: 'Со последната песна.' }
     ],
-    menuNote: 'Вечерата е со стандардно мени. Ако постите или имате посебна исхрана, јавете ни однапред.',
-    rsvpBy: '1 јули 2027'
+    menuNote: 'Вечерата е со стандардно мени. Ако постите или имате посебна исхрана, јавете ни однапред.'
   };
   /* ===================================== */
 
@@ -397,7 +395,7 @@ footer.sec{gap:18px;padding-block:54px}
   set('footerDate', dateDots); set('dateSpaced', pad(ymd[2]) + ' · ' + pad(ymd[1]) + ' · ' + ymd[0]);
   set('venueName', CONFIG.venue.name); set('venuePlace', CONFIG.venue.place); set('venueTime', CONFIG.venue.time);
   set('letter1', CONFIG.letter[0]); set('letter2', CONFIG.letter[1] || '');
-  set('menuNote', CONFIG.menuNote); set('rsvpBy', CONFIG.rsvpBy);
+  set('menuNote', CONFIG.menuNote);
   document.title = couple;
 
   /* ---- month with the wedding day marked ---- */
